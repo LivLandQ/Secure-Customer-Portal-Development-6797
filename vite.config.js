@@ -4,13 +4,13 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/Secure-Customer-Portal-Development-6797/', // Add this line
+  base: './',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
   },
-  build: {
+   build: {
     outDir: 'dist',
     sourcemap: true
   },
