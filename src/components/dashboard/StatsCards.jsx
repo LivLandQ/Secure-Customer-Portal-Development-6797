@@ -14,7 +14,7 @@ const StatsCards = () => {
       name: 'Active Quotes',
       value: quotes.filter(q => q.status !== 'draft').length,
       icon: FiFileText,
-      color: 'bg-brand-primary',
+      color: 'bg-blue-500',
       change: '+2 this month'
     },
     {
@@ -48,13 +48,13 @@ const StatsCards = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
-          className="bg-brand-white rounded-xl shadow-sm border border-brand-accent p-6 hover:shadow-md transition-shadow"
+          className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-brand-accent subheading">{stat.name}</p>
-              <p className="text-3xl font-bold text-brand-primary mt-2 heading-primary">{stat.value}</p>
-              <p className="text-sm text-brand-text mt-1 body-text">{stat.change}</p>
+              <p className="text-sm font-medium text-gray-600">{stat.name}</p>
+              <p className="text-3xl font-bold text-gray-900 mt-2">{stat.value}</p>
+              <p className="text-sm text-gray-500 mt-1">{stat.change}</p>
             </div>
             <div className={`${stat.color} p-3 rounded-lg`}>
               <SafeIcon icon={stat.icon} className="h-6 w-6 text-white" />

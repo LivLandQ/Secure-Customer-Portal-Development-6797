@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
-import Logo from '../common/Logo';
 import SafeIcon from '../../common/SafeIcon';
 import * as FiIcons from 'react-icons/fi';
 
@@ -14,6 +13,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  
   const { user, login } = useAuth();
 
   if (user) {
@@ -26,45 +26,47 @@ const Login = () => {
     setError('');
 
     const result = await login(email, password);
+    
     if (!result.success) {
       setError(result.error);
     }
+    
     setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-brand-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-brand-white rounded-2xl shadow-2xl p-8 w-full max-w-md border border-brand-accent"
+        className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md"
       >
         <div className="text-center mb-8">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="flex justify-center mb-6"
+            className="inline-flex items-center justify-center w-16 h-16 bg-primary-500 rounded-full mb-4"
           >
-            <Logo className="h-12 w-auto" />
+            <SafeIcon icon={FiShield} className="text-white text-2xl" />
           </motion.div>
-          <h1 className="text-2xl font-bold text-brand-primary mb-2 heading-primary">Customer Portal</h1>
-          <p className="text-brand-text body-text">Sign in to access your dashboard</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Customer Portal</h1>
+          <p className="text-gray-600">Sign in to access your dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-brand-primary mb-2 subheading">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Email Address
             </label>
             <div className="relative">
-              <SafeIcon icon={FiMail} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-brand-accent" />
+              <SafeIcon icon={FiMail} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-brand-accent rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-all form-input-brand form-text"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                 placeholder="Enter your email"
                 required
               />
@@ -72,23 +74,23 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-brand-primary mb-2 subheading">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Password
             </label>
             <div className="relative">
-              <SafeIcon icon={FiLock} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-brand-accent" />
+              <SafeIcon icon={FiLock} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-12 py-3 border border-brand-accent rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-all form-input-brand form-text"
+                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                 placeholder="Enter your password"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-brand-accent hover:text-brand-primary"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
                 <SafeIcon icon={showPassword ? FiEyeOff : FiEye} />
               </button>
@@ -99,7 +101,7 @@ const Login = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-red-50 text-red-700 p-3 rounded-lg text-sm border border-red-200"
+              className="bg-red-50 text-red-700 p-3 rounded-lg text-sm"
             >
               {error}
             </motion.div>
@@ -110,16 +112,16 @@ const Login = () => {
             whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={loading}
-            className="w-full bg-brand-primary text-brand-white py-3 rounded-lg font-medium hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all btn-brand-primary subheading"
+            className="w-full bg-primary-500 text-white py-3 rounded-lg font-medium hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </motion.button>
         </form>
 
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-brand-accent">
-          <p className="text-sm text-brand-primary mb-2 subheading">Demo Credentials:</p>
-          <p className="text-xs text-brand-text body-text">Email: demo@customer.com</p>
-          <p className="text-xs text-brand-text body-text">Password: password123</p>
+        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+          <p className="text-sm text-gray-600 mb-2">Demo Credentials:</p>
+          <p className="text-xs text-gray-500">Email: demo@customer.com</p>
+          <p className="text-xs text-gray-500">Password: password123</p>
         </div>
       </motion.div>
     </div>

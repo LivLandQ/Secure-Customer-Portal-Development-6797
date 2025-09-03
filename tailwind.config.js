@@ -7,25 +7,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          primary: '#447780',    // Headings, links, buttons
-          text: '#58595B',       // Body text
-          accent: '#939598',     // Borders, subtle accents
-          white: '#FFFFFF',      // Primary background
-          black: '#000000'       // Deep contrast
-        },
-        // Keep existing primary colors for backward compatibility
         primary: {
-          50: '#f0f9fa',
-          100: '#daf2f4',
-          200: '#b8e5ea',
-          300: '#89d1da',
-          400: '#54b5c4',
-          500: '#447780',
-          600: '#3d6b73',
-          700: '#356066',
-          800: '#2d5459',
-          900: '#25474c',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
         },
         secondary: {
           50: '#f8fafc',
@@ -39,15 +31,6 @@ export default {
           800: '#1e293b',
           900: '#0f172a',
         }
-      },
-      fontFamily: {
-        'eurostile': ['Eurostile', 'Arial Black', 'sans-serif'],
-        'helvetica': ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
-        'system': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
-      },
-      fontWeight: {
-        'demi': '600',
-        'bold': '700'
       }
     },
   },
