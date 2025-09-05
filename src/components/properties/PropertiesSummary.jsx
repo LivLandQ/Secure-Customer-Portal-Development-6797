@@ -27,7 +27,11 @@ const PropertiesSummary = () => {
       setLoading(true);
       setError('');
       
-      const userProperties = await getUserProperties(user.id);
+// Before:
+// const userProperties = await getUserProperties(user.id);
+
+// After:
+const userProperties = await getUserProperties();
       setProperties(userProperties);
       
       // Auto-redirect if user has only one property
