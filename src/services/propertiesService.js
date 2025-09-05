@@ -1,55 +1,49 @@
-// TODO: Replace with Supabase RPC calls and table queries
-// This service will be updated to use Supabase when backend is integrated
+// src/services/propertiesService.js
+import { supabase } from '../lib/supabaseClient';
 
-const mockProperties = {
-  '1': [
-    {
-      id: 'prop_001',
-      address: '12 Smith St, Caboolture QLD',
-      propertyCode: 'SMT-001'
-    },
-    {
-      id: 'prop_002', 
-      address: '45 Johnson Ave, Brisbane QLD',
-      propertyCode: 'JHN-002'
-    },
-    {
-      id: 'prop_003',
-      address: '78 Wilson Road, Redcliffe QLD',
-      propertyCode: 'WLS-003'
-    }
-  ],
-  'demo_single': [
-    {
-      id: 'prop_single',
-      address: '123 Main Street, Gold Coast QLD',
-      propertyCode: 'MN-123'
-    }
-  ],
-  'demo_none': []
-};
+/**
+ * Tables (Model A):
+ *  - public.properties (id uuid PK, address text, property_code text, created_at timestamptz)
+ *  - public.property_access (user_id uuid FK -> auth.users.id, property_id uuid FK -> properties.id)
+ * RLS ensures users only see properties they have access to.
+ */
 
+/** Get all properties visible to the user */
 export const getUserProperties = async (userId) => {
-  // TODO: Replace with Supabase query
-  // const { data, error } = await supabase
-  //   .rpc('get_user_properties', { user_id: userId })
-  //   .select('id, address, property_code');
-  
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 500));
-  
-  return mockProperties[userId] || mockProperties['1'];
+  // Step 1: get property ids the user can access
+  const { data: links, error: linkErr } = await supabase
+    .from('property_access')
+    .select('property_id')
+    .eq('user_id', userId);
+
+  if (linkErr) throw linkErr;
+  if (!links || links.length === 0) return [];
+
+  const ids = links.map(l => l.property_id);
+
+  // Step 2: fetch those properties
+  const { data, error } = await supabase
+    .from('properties')
+    .select('id, address, property_code')
+    .in('id', ids)
+    .order('address', { ascending: true });
+
+  if (error) throw error;
+  return data ?? [];
 };
 
+/** Get one property by id (RLS must allow it via property_access) */
 export const getPropertyById = async (propertyId) => {
-  // TODO: Replace with Supabase query
-  // const { data, error } = await supabase
-  //   .from('properties')
-  //   .select('*')
-  //   .eq('id', propertyId)
-  //   .single();
-  
-  // Find property in mock data
-  const allProperties = Object.values(mockProperties).flat();
-  return allProperties.find(prop => prop.id === propertyId);
+  const { data, error } = await supabase
+    .from('properties')
+    .select('*')
+    .eq('id', propertyId)
+    .single();
+
+  if (error) {
+    // If 0 rows due to RLS or not found, return null
+    if (error.code === 'PGRST116' || (error.details ?? '').includes('0 rows')) return null;
+    throw error;
+  }
+  return data;
 };
