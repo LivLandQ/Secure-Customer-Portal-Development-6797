@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
     if (email === 'demo@customer.com' && password === 'password123') {
       const userData = {
         id: '1',
@@ -34,6 +34,28 @@ export const AuthProvider = ({ children }) => {
         name: 'John Smith',
         company: 'Smith Construction Ltd',
         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+      };
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
+      return { success: true };
+    } else if (email === 'single@customer.com' && password === 'password123') {
+      const userData = {
+        id: 'demo_single',
+        email: 'single@customer.com',
+        name: 'Jane Doe',
+        company: 'Doe Properties',
+        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
+      };
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
+      return { success: true };
+    } else if (email === 'none@customer.com' && password === 'password123') {
+      const userData = {
+        id: 'demo_none',
+        email: 'none@customer.com',
+        name: 'Bob Johnson',
+        company: 'Johnson Corp',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
       };
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));

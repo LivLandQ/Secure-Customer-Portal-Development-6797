@@ -3,7 +3,9 @@ import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext';
 import { DataProvider } from './contexts/DataContext';
 import Login from './components/auth/Login';
-import Dashboard from './components/dashboard/Dashboard';
+import PropertiesSummary from './components/properties/PropertiesSummary';
+import DashboardWithProperty from './components/dashboard/DashboardWithProperty';
+import { PropertyProvider } from './components/dashboard/PropertyContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Layout from './components/layout/Layout';
 
@@ -14,19 +16,27 @@ function App() {
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route 
-              path="/*" 
+            <Route
+              path="/properties"
               element={
                 <ProtectedRoute>
-                  <Layout>
-                    <Routes>
-                      <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                      <Route path="/dashboard" element={<Dashboard />} />
-                    </Routes>
-                  </Layout>
+                  <PropertiesSummary />
                 </ProtectedRoute>
-              } 
+              }
             />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <PropertyProvider>
+                    <Layout>
+                      <DashboardWithProperty />
+                    </Layout>
+                  </PropertyProvider>
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/" element={<Navigate to="/login" replace />} />
           </Routes>
         </Router>
       </DataProvider>

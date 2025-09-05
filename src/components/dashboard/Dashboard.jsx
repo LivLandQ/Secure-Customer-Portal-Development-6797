@@ -16,8 +16,8 @@ const Dashboard = () => {
         animate={{ opacity: 1, y: 0 }}
         className="mb-8"
       >
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600 mt-2">Welcome back! Here's an overview of your projects.</p>
+        <h1 className="text-3xl font-bold text-brand-grey font-helvetica">Dashboard</h1>
+        <p className="text-grey-400 mt-2 font-helvetica">Welcome back! Here's an overview of your projects.</p>
       </motion.div>
 
       <StatsCards />

@@ -54,31 +54,31 @@ const FileUpload = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+      className="card p-6"
     >
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-          <SafeIcon icon={FiUpload} className="mr-2 text-primary-500" />
+        <h2 className="text-xl font-semibold text-brand-grey flex items-center font-helvetica">
+          <SafeIcon icon={FiUpload} className="mr-2 text-brand-teal" />
           File Upload
         </h2>
       </div>
 
       <div
-        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+        className={`border-2 border-dashed rounded-brand p-6 text-center transition-colors ${
           dragActive 
-            ? 'border-primary-500 bg-primary-50' 
-            : 'border-gray-300 hover:border-primary-400'
+            ? 'border-brand-teal bg-primary-50' 
+            : 'border-gray-300 hover:border-brand-teal'
         }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
         onDragOver={handleDrag}
         onDrop={handleDrop}
       >
-        <SafeIcon icon={FiUpload} className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-        <p className="text-lg font-medium text-gray-900 mb-2">
+        <SafeIcon icon={FiUpload} className="mx-auto h-12 w-12 text-grey-400 mb-4" />
+        <p className="text-lg font-medium text-brand-grey mb-2 font-helvetica">
           Drop files here or click to upload
         </p>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-grey-400 mb-4 font-helvetica">
           PDF, PNG, JPG up to 10MB
         </p>
         <input
@@ -91,7 +91,7 @@ const FileUpload = () => {
         />
         <label
           htmlFor="file-upload"
-          className="inline-flex items-center px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 cursor-pointer"
+          className="btn-primary inline-flex items-center cursor-pointer"
         >
           <SafeIcon icon={FiUpload} className="mr-2 h-4 w-4" />
           Select Files
@@ -99,7 +99,7 @@ const FileUpload = () => {
       </div>
 
       <div className="mt-6">
-        <h3 className="text-sm font-medium text-gray-900 mb-3">Recent Files</h3>
+        <h3 className="text-sm font-medium text-brand-grey mb-3 font-helvetica">Recent Files</h3>
         <div className="space-y-2">
           {files.slice(0, 3).map((file, index) => (
             <motion.div
@@ -107,18 +107,18 @@ const FileUpload = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:shadow-md transition-all"
+              className="flex items-center justify-between p-3 border border-gray-100 rounded-brand card-hover"
             >
               <div className="flex items-center flex-1">
                 <SafeIcon 
                   icon={getFileIcon(file.type)} 
-                  className="h-5 w-5 text-gray-400 mr-3" 
+                  className="h-5 w-5 text-grey-400 mr-3" 
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
+                  <p className="text-sm font-medium text-brand-grey truncate font-helvetica">
                     {file.name}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-grey-400 font-helvetica">
                     {file.size} • {file.uploadDate}
                   </p>
                 </div>
@@ -128,7 +128,7 @@ const FileUpload = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => downloadFile(file)}
-                  className="p-1 text-gray-400 hover:text-green-600"
+                  className="p-1 rounded-brand text-grey-400 hover:text-green-600 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200"
                   title="Download"
                 >
                   <SafeIcon icon={FiDownload} className="h-4 w-4" />
@@ -136,7 +136,7 @@ const FileUpload = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-1 text-gray-400 hover:text-red-600"
+                  className="icon-btn-danger"
                   title="Delete"
                 >
                   <SafeIcon icon={FiTrash2} className="h-4 w-4" />
@@ -146,7 +146,7 @@ const FileUpload = () => {
           ))}
         </div>
         {files.length > 3 && (
-          <button className="text-primary-600 hover:text-primary-700 text-sm font-medium mt-3">
+          <button className="text-brand-teal hover:text-primary-600 text-sm font-medium mt-3 font-helvetica">
             View All Files ({files.length})
           </button>
         )}

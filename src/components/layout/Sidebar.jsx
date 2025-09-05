@@ -39,13 +39,13 @@ const Sidebar = ({ open, setOpen }) => {
         initial={{ x: -320 }}
         animate={{ x: open ? 0 : -320 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className={`fixed top-0 left-0 z-50 h-full w-64 bg-white shadow-xl transform lg:translate-x-0 lg:static lg:inset-0`}
+        className={`fixed top-0 left-0 z-50 h-full w-64 bg-white shadow-card transform lg:translate-x-0 lg:static lg:inset-0`}
       >
-        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200">
-          <h1 className="text-xl font-bold text-gray-900">Customer Portal</h1>
+        <div className="flex items-center justify-between h-16 px-6 border-b border-gray-100">
+          <h1 className="text-xl font-bold text-brand-grey font-helvetica">Customer Portal</h1>
           <button
             onClick={() => setOpen(false)}
-            className="lg:hidden p-2 rounded-md text-gray-500 hover:text-gray-900"
+            className="lg:hidden icon-btn"
           >
             <SafeIcon icon={FiX} className="h-5 w-5" />
           </button>
@@ -58,21 +58,21 @@ const Sidebar = ({ open, setOpen }) => {
                 key={item.name}
                 href="#"
                 whileHover={{ x: 4 }}
-                className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all ${
+                className={`group flex items-center px-3 py-3 text-sm font-medium rounded-brand transition-all font-helvetica ${
                   item.current
-                    ? 'bg-primary-50 text-primary-700 border-r-2 border-primary-500'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
+                    ? 'bg-primary-50 text-brand-teal border-r-2 border-brand-teal'
+                    : 'text-brand-grey hover:text-brand-teal hover:bg-primary-50'
                 }`}
               >
                 <SafeIcon
                   icon={item.icon}
                   className={`mr-3 h-5 w-5 ${
-                    item.current ? 'text-primary-500' : 'text-gray-400 group-hover:text-gray-500'
+                    item.current ? 'text-brand-teal' : 'text-grey-400 group-hover:text-brand-teal'
                   }`}
                 />
                 {item.name}
                 {item.badge && item.badge > 0 && (
-                  <span className="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-1">
+                  <span className="ml-auto bg-red-500 text-white text-xs rounded-full px-2 py-1 font-helvetica">
                     {item.badge}
                   </span>
                 )}

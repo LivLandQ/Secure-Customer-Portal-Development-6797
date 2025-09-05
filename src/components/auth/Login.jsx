@@ -13,11 +13,10 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
   const { user, login } = useAuth();
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/properties" replace />;
   }
 
   const handleSubmit = async (e) => {
@@ -26,47 +25,45 @@ const Login = () => {
     setError('');
 
     const result = await login(email, password);
-    
     if (!result.success) {
       setError(result.error);
     }
-    
     setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md"
+        className="card p-8 w-full max-w-md"
       >
         <div className="text-center mb-8">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="inline-flex items-center justify-center w-16 h-16 bg-primary-500 rounded-full mb-4"
+            className="inline-flex items-center justify-center w-16 h-16 bg-brand-teal rounded-full mb-4"
           >
             <SafeIcon icon={FiShield} className="text-white text-2xl" />
           </motion.div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Customer Portal</h1>
-          <p className="text-gray-600">Sign in to access your dashboard</p>
+          <h1 className="text-2xl font-bold text-brand-grey mb-2 font-helvetica">Customer Portal</h1>
+          <p className="text-grey-400 font-helvetica">Sign in to access your dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-brand-grey mb-2 font-helvetica">
               Email Address
             </label>
             <div className="relative">
-              <SafeIcon icon={FiMail} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <SafeIcon icon={FiMail} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-grey-400" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                className="input-field pl-10"
                 placeholder="Enter your email"
                 required
               />
@@ -74,23 +71,23 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-brand-grey mb-2 font-helvetica">
               Password
             </label>
             <div className="relative">
-              <SafeIcon icon={FiLock} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <SafeIcon icon={FiLock} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-grey-400" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                className="input-field pl-10 pr-12"
                 placeholder="Enter your password"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 icon-btn"
               >
                 <SafeIcon icon={showPassword ? FiEyeOff : FiEye} />
               </button>
@@ -101,7 +98,7 @@ const Login = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-red-50 text-red-700 p-3 rounded-lg text-sm"
+              className="bg-red-50 text-red-700 p-3 rounded-brand text-sm font-helvetica"
             >
               {error}
             </motion.div>
@@ -112,16 +109,18 @@ const Login = () => {
             whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={loading}
-            className="w-full bg-primary-500 text-white py-3 rounded-lg font-medium hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            className="btn-primary w-full"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </motion.button>
         </form>
 
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-600 mb-2">Demo Credentials:</p>
-          <p className="text-xs text-gray-500">Email: demo@customer.com</p>
-          <p className="text-xs text-gray-500">Password: password123</p>
+        <div className="mt-6 p-4 bg-grey-50 rounded-brand">
+          <p className="text-sm text-brand-grey mb-2 font-helvetica">Demo Credentials:</p>
+          <p className="text-xs text-grey-400 font-helvetica">Multiple properties: demo@customer.com</p>
+          <p className="text-xs text-grey-400 font-helvetica">Single property: single@customer.com</p>
+          <p className="text-xs text-grey-400 font-helvetica">No properties: none@customer.com</p>
+          <p className="text-xs text-grey-400 font-helvetica">Password: password123</p>
         </div>
       </motion.div>
     </div>

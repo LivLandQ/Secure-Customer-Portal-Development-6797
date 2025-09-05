@@ -12,10 +12,10 @@ const QuotesDashboard = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'approved': return 'bg-green-100 text-green-800';
-      case 'pending': return 'bg-yellow-100 text-yellow-800';
-      case 'draft': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'approved': return 'status-approved';
+      case 'pending': return 'status-pending';
+      case 'draft': return 'status-draft';
+      default: return 'status-draft';
     }
   };
 
@@ -33,14 +33,14 @@ const QuotesDashboard = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+      className="card p-6"
     >
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-          <SafeIcon icon={FiFileText} className="mr-2 text-primary-500" />
+        <h2 className="text-xl font-semibold text-brand-grey flex items-center font-helvetica">
+          <SafeIcon icon={FiFileText} className="mr-2 text-brand-teal" />
           Quotes
         </h2>
-        <button className="text-primary-600 hover:text-primary-700 text-sm font-medium">
+        <button className="text-brand-teal hover:text-primary-600 text-sm font-medium font-helvetica">
           View All
         </button>
       </div>
@@ -52,21 +52,21 @@ const QuotesDashboard = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-all"
+            className="border border-gray-100 rounded-brand p-4 card-hover"
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h3 className="font-medium text-gray-900">{quote.title}</h3>
-                <p className="text-sm text-gray-500 mt-1">{quote.description}</p>
+                <h3 className="font-medium text-brand-grey font-helvetica">{quote.title}</h3>
+                <p className="text-sm text-grey-400 mt-1 font-helvetica">{quote.description}</p>
                 <div className="flex items-center mt-2 space-x-4">
-                  <span className="text-lg font-semibold text-green-600">
+                  <span className="text-lg font-semibold text-green-600 font-helvetica">
                     ${quote.amount.toLocaleString()}
                   </span>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(quote.status)}`}>
+                  <span className={getStatusColor(quote.status)}>
                     {quote.status.charAt(0).toUpperCase() + quote.status.slice(1)}
                   </span>
                 </div>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-grey-400 mt-1 font-helvetica">
                   {format(new Date(quote.date), 'MMM dd, yyyy')}
                 </p>
               </div>
@@ -74,7 +74,7 @@ const QuotesDashboard = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg"
+                  className="icon-btn"
                   title="View Quote"
                 >
                   <SafeIcon icon={FiEye} className="h-4 w-4" />
@@ -83,7 +83,7 @@ const QuotesDashboard = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => downloadPDF(quote)}
-                  className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg"
+                  className="p-2 rounded-brand text-grey-400 hover:text-green-600 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200"
                   title="Download PDF"
                 >
                   <SafeIcon icon={FiDownload} className="h-4 w-4" />

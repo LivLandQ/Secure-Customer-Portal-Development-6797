@@ -35,18 +35,18 @@ const MessageCenter = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+      className="card p-6"
     >
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900 flex items-center">
-          <SafeIcon icon={FiMessageSquare} className="mr-2 text-primary-500" />
+        <h2 className="text-xl font-semibold text-brand-grey flex items-center font-helvetica">
+          <SafeIcon icon={FiMessageSquare} className="mr-2 text-brand-teal" />
           Message Center
         </h2>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setShowCompose(!showCompose)}
-          className="bg-primary-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-600"
+          className="btn-primary text-sm"
         >
           {showCompose ? 'Cancel' : 'Compose'}
         </motion.button>
@@ -58,21 +58,21 @@ const MessageCenter = () => {
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
           onSubmit={handleSendMessage}
-          className="border border-gray-200 rounded-lg p-4 mb-6 space-y-4"
+          className="border border-gray-100 rounded-brand p-4 mb-6 space-y-4"
         >
           <input
             type="text"
             placeholder="Subject"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="input-field"
             required
           />
           <textarea
             placeholder="Type your message..."
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+            className="input-field resize-none"
             rows="3"
             required
           />
@@ -81,7 +81,7 @@ const MessageCenter = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="bg-primary-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-600 flex items-center"
+              className="btn-primary text-sm flex items-center"
             >
               <SafeIcon icon={FiSend} className="mr-2 h-4 w-4" />
               Send Message
@@ -98,8 +98,8 @@ const MessageCenter = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
             onClick={() => handleMessageClick(message)}
-            className={`border rounded-lg p-3 cursor-pointer hover:shadow-md transition-all ${
-              message.read ? 'border-gray-200' : 'border-primary-200 bg-primary-50'
+            className={`border rounded-brand p-3 cursor-pointer card-hover ${
+              message.read ? 'border-gray-100' : 'border-primary-200 bg-primary-50'
             }`}
           >
             <div className="flex items-start justify-between">
@@ -108,23 +108,23 @@ const MessageCenter = () => {
                   <SafeIcon 
                     icon={message.read ? FiMailOpen : FiMail} 
                     className={`mr-2 h-4 w-4 ${
-                      message.read ? 'text-gray-400' : 'text-primary-500'
+                      message.read ? 'text-grey-400' : 'text-brand-teal'
                     }`} 
                   />
-                  <h3 className={`font-medium ${
-                    message.read ? 'text-gray-900' : 'text-primary-900'
+                  <h3 className={`font-medium font-helvetica ${
+                    message.read ? 'text-brand-grey' : 'text-brand-teal'
                   }`}>
                     {message.subject}
                   </h3>
                 </div>
-                <p className="text-sm text-gray-600 mt-1">From: {message.sender}</p>
-                <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                <p className="text-sm text-grey-400 mt-1 font-helvetica">From: {message.sender}</p>
+                <p className="text-sm text-grey-400 mt-1 line-clamp-2 font-helvetica">
                   {message.message}
                 </p>
-                <p className="text-xs text-gray-400 mt-2">{message.timestamp}</p>
+                <p className="text-xs text-grey-400 mt-2 font-helvetica">{message.timestamp}</p>
               </div>
               {!message.read && message.type === 'received' && (
-                <div className="w-2 h-2 bg-primary-500 rounded-full ml-2 mt-1"></div>
+                <div className="w-2 h-2 bg-brand-teal rounded-full ml-2 mt-1"></div>
               )}
             </div>
           </motion.div>

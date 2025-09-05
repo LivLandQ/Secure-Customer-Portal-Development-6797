@@ -10,11 +10,11 @@ const Header = ({ setSidebarOpen }) => {
   const { user, logout } = useAuth();
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200">
+    <header className="bg-white shadow-card border-b border-gray-100">
       <div className="flex items-center justify-between px-6 py-4">
         <button
           onClick={() => setSidebarOpen(true)}
-          className="lg:hidden p-2 rounded-md text-gray-500 hover:text-gray-900 hover:bg-gray-100"
+          className="lg:hidden icon-btn"
         >
           <SafeIcon icon={FiMenu} className="h-6 w-6" />
         </button>
@@ -23,7 +23,7 @@ const Header = ({ setSidebarOpen }) => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="p-2 rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-100 relative"
+            className="icon-btn relative"
           >
             <SafeIcon icon={FiBell} className="h-5 w-5" />
             <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
@@ -36,8 +36,8 @@ const Header = ({ setSidebarOpen }) => {
               className="h-8 w-8 rounded-full object-cover"
             />
             <div className="hidden md:block">
-              <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-              <p className="text-xs text-gray-500">{user?.company}</p>
+              <p className="text-sm font-medium text-brand-grey font-helvetica">{user?.name}</p>
+              <p className="text-xs text-grey-400 font-helvetica">{user?.company}</p>
             </div>
           </div>
 
@@ -45,7 +45,7 @@ const Header = ({ setSidebarOpen }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={logout}
-            className="p-2 rounded-md text-gray-500 hover:text-red-600 hover:bg-red-50"
+            className="p-2 rounded-brand text-grey-400 hover:text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200"
             title="Sign out"
           >
             <SafeIcon icon={FiLogOut} className="h-5 w-5" />
