@@ -11,7 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const { user, login } = useAuth();
 
@@ -21,14 +21,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setSubmitting(true);
     setError('');
-
-    const result = await login(email, password);
-    if (!result.success) {
-      setError(result.error);
+    try {
+      const result = await login(email, password); // Supabase auth via context
+      if (!result?.success) setError(result?.error || 'Sign in failed');
+    } catch (err) {
+      setError(err?.message || 'Sign in failed');
+    } finally {
+      setSubmitting(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -43,7 +45,7 @@ const Login = () => {
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
             className="inline-flex items-center justify-center w-16 h-16 bg-brand-teal rounded-full mb-4"
           >
             <SafeIcon icon={FiShield} className="text-white text-2xl" />
@@ -61,6 +63,7 @@ const Login = () => {
               <SafeIcon icon={FiMail} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-grey-400" />
               <input
                 type="email"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="input-field pl-10"
@@ -78,6 +81,7 @@ const Login = () => {
               <SafeIcon icon={FiLock} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-grey-400" />
               <input
                 type={showPassword ? 'text' : 'password'}
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="input-field pl-10 pr-12"
@@ -88,6 +92,7 @@ const Login = () => {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 icon-btn"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 <SafeIcon icon={showPassword ? FiEyeOff : FiEye} />
               </button>
@@ -108,20 +113,19 @@ const Login = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            disabled={loading}
+            disabled={submitting}
             className="btn-primary w-full"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {submitting ? 'Signing in...' : 'Sign In'}
           </motion.button>
         </form>
 
-        <div className="mt-6 p-4 bg-grey-50 rounded-brand">
+        {/* Optional: remove this block once real users are using the app */}
+        {/* <div className="mt-6 p-4 bg-grey-50 rounded-brand">
           <p className="text-sm text-brand-grey mb-2 font-helvetica">Demo Credentials:</p>
-          <p className="text-xs text-grey-400 font-helvetica">Multiple properties: demo@customer.com</p>
-          <p className="text-xs text-grey-400 font-helvetica">Single property: single@customer.com</p>
-          <p className="text-xs text-grey-400 font-helvetica">No properties: none@customer.com</p>
-          <p className="text-xs text-grey-400 font-helvetica">Password: password123</p>
-        </div>
+          <p className="text-xs text-grey-400 font-helvetica">test@example.com</p>
+          <p className="text-xs text-grey-400 font-helvetica">Password: ••••••••</p>
+        </div> */}
       </motion.div>
     </div>
   );
